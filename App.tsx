@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import AppLoading from 'expo-app-loading';
+import { Constants } from './src/configs';
+
+import { AppContexts } from './src/contexts';
+import { StorageHelper } from './src/helpers';
+import { AppNavigations } from './src/navigations';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
+
+  if (!fontsLoaded) return <AppLoading />;
+
+  // StorageHelper.removeItem(Constants.AuthStorageKey);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AppContexts>
+      <AppNavigations />
+    </AppContexts>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
